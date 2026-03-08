@@ -317,11 +317,11 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/white">
 
-                    <!-- Map Placeholder -->
+                    <!-- Map Image -->
                     <ImageView
                         android:id="@+id/mapPlaceholder"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="350dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/location2"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -362,7 +362,7 @@
                             app:tint="#7B7B93" />
                     </LinearLayout>
 
-                    <!-- Marker Placeholder -->
+                    <!-- Marker -->
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -380,7 +380,7 @@
                         android:layout_margin="16dp"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="4dp"
-                        app:layout_constraintTop_toBottomOf="@id/mapPlaceholder">
+                        app:layout_constraintBottom_toBottomOf="@id/mapPlaceholder">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -415,10 +415,20 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="12dp"
                                     android:layout_weight="1"
-                                    android:text="Jl. Cisangkuy, Citarum, Kec. Bandung Wetan, Kota Bandung, Jawa Barat 40115"
+                                    android:text="House 123, Block Y, Phase 3, DHA, Lahore, Pakistan"
                                     android:textColor="#7B7B93"
                                     android:textSize="12sp" />
                             </LinearLayout>
+
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:layout_marginTop="12dp"
+                                android:backgroundTint="#8BC34A"
+                                android:text="Choose Location"
+                                android:textAllCaps="false"
+                                android:textColor="@android:color/white"
+                                app:cornerRadius="12dp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
