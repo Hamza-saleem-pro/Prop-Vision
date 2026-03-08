@@ -2,7 +2,7 @@ package com.example.propvision
 
 import android.os.Bundle
 import android.view.View
-import android.widget.GridLayout
+import androidx.gridlayout.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
