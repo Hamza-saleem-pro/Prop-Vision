@@ -34,5 +34,11 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, AddPropertyActivity::class.java)
             startActivity(intent)
         }
+
+        // Setup Profile navigation
+        findViewById<ImageView>(R.id.nav_profile).setOnClickListener {
+            val intent = Intent(this, CreateProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
