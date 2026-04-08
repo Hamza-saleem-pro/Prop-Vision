@@ -99,6 +99,8 @@
                 android:layout_marginStart="10dp"
                 android:background="@null"
                 android:hint="Email"
+                android:textColor="#2D3A5F"
+                android:textColorHint="#7B7B93"
                 android:importantForAutofill="no"
                 android:inputType="textEmailAddress" />
         </LinearLayout>
@@ -130,6 +132,8 @@
                 android:layout_marginStart="10dp"
                 android:background="@null"
                 android:hint="Password"
+                android:textColor="#2D3A5F"
+                android:textColorHint="#7B7B93"
                 android:importantForAutofill="no"
                 android:inputType="textPassword" />
         </LinearLayout>
