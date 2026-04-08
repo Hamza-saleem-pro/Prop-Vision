@@ -218,6 +218,8 @@
                 android:paddingHorizontal="20dp">
 
                 <!-- List View -->
+
+                <!-- Grid View -->
                 <LinearLayout
                     android:id="@+id/listViewLayout"
                     android:layout_width="match_parent"
@@ -226,12 +228,14 @@
                     android:visibility="visible">
 
                     <include layout="@layout/item_property_list" />
+
                     <include layout="@layout/item_property_list" />
+
                     <include layout="@layout/item_property_list" />
+
                     <include layout="@layout/item_property_list" />
                 </LinearLayout>
 
-                <!-- Grid View -->
                 <androidx.gridlayout.widget.GridLayout
                     android:id="@+id/gridViewLayout"
                     android:layout_width="match_parent"

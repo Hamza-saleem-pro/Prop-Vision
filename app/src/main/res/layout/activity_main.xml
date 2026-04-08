@@ -6,23 +6,16 @@
 
     <!-- Background Image -->
     <ImageView
-        android:id="@+id/bgImage"
+        android:id="@+id/splashBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splash_bg"
-        android:scaleType="centerCrop" />
-
-    <!-- Gradient Overlay -->
-    <View
-        android:id="@+id/gradientOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/splash_bk_gradient" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash_bg" />
 
     <!-- Logo -->
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="230dp"
+        android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/ic_splash_logo"
         android:layout_centerHorizontal="true"

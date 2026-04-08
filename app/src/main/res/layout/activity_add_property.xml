@@ -14,7 +14,6 @@
         android:background="@android:color/transparent"
         app:elevation="0dp">
 
-        <!-- Header -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
@@ -49,7 +48,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Content Area -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
@@ -74,7 +72,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Price Sections -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,6 +89,7 @@
                 android:paddingHorizontal="15dp">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs." android:textColor="#2D3A5F" />
                 <EditText
+                    android:id="@+id/sellPriceInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -120,6 +118,7 @@
                 android:paddingHorizontal="15dp">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs." android:textColor="#2D3A5F" />
                 <EditText
+                    android:id="@+id/rentPriceInput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -132,7 +131,6 @@
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/month" android:textColor="#7B7B93" />
             </LinearLayout>
 
-            <!-- Property Features -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -150,9 +148,9 @@
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp">
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bedroom" android:textColor="#2D3A5F" />
-                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
-                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
-                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
+                <ImageView android:id="@+id/btnMinusBedroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
+                <TextView android:id="@+id/txtBedroomCount" android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
+                <ImageView android:id="@+id/btnAddBedroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
             </LinearLayout>
 
             <!-- Bathroom -->
@@ -164,9 +162,9 @@
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp">
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bathroom" android:textColor="#2D3A5F" />
-                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
-                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
-                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
+                <ImageView android:id="@+id/btnMinusBathroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
+                <TextView android:id="@+id/txtBathroomCount" android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
+                <ImageView android:id="@+id/btnAddBathroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
             </LinearLayout>
 
             <!-- Kitchen -->
@@ -178,101 +176,11 @@
                 android:gravity="center_vertical"
                 android:paddingHorizontal="15dp">
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Kitchen" android:textColor="#2D3A5F" />
-                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
-                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
-                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
+                <ImageView android:id="@+id/btnMinusKitchen" android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
+                <TextView android:id="@+id/txtKitchenCount" android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
+                <ImageView android:id="@+id/btnAddKitchen" android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
             </LinearLayout>
 
-            <!-- TV Lounge -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/social_button_bg"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="15dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="TV Lounge" android:textColor="#2D3A5F" />
-                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
-                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
-                <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
-            </LinearLayout>
-
-            <!-- Environment -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Environment"
-                android:textColor="#2D3A5F"
-                android:textStyle="bold" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Garden" />
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Park" />
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pet Allowed" />
-            </com.google.android.material.chip.ChipGroup>
-
-            <!-- Facilities -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Facilities"
-                android:textColor="#2D3A5F"
-                android:textStyle="bold" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Parking Lot" />
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gym" />
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Home theatre" />
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Security" />
-            </com.google.android.material.chip.ChipGroup>
-
-            <!-- Purpose -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Listing Purpose"
-                android:textColor="#2D3A5F"
-                android:textStyle="bold" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:singleSelection="true">
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="For Sale" android:checkable="true" />
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="For Rent" android:checkable="true" />
-            </com.google.android.material.chip.ChipGroup>
-
-            <!-- Property Type -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Property Type"
-                android:textColor="#2D3A5F"
-                android:textStyle="bold" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:singleSelection="true">
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="House" android:checkable="true" />
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Office" android:checkable="true" />
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Flat" android:checkable="true" />
-                <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hotel" android:checkable="true" />
-            </com.google.android.material.chip.ChipGroup>
-
-            <!-- Photos -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -290,9 +198,10 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:cardCornerRadius="16dp">
-                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/feature_estate1" android:scaleType="centerCrop" />
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/ic_property_placeholder" android:scaleType="centerCrop" />
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/addPhotoBtn"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginStart="12dp"
@@ -302,7 +211,6 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
-            <!-- Location Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -312,6 +220,7 @@
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/mapContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -323,52 +232,13 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/white">
 
-                    <!-- Map Image -->
-                    <ImageView
+                    <View
                         android:id="@+id/mapPlaceholder"
                         android:layout_width="match_parent"
-                        android:layout_height="350dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/location2"
+                        android:layout_height="250dp"
+                        android:background="#E8F5E9"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <!-- Search bar on map -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_margin="16dp"
-                        android:background="@drawable/input_background"
-                        android:backgroundTint="#F0F0F0"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="15dp"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:src="@android:drawable/ic_menu_search"
-                            app:tint="#7B7B93" />
-
-                        <EditText
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:background="@null"
-                            android:hint="Find location"
-                            android:textColor="#2D3A5F"
-                            android:textColorHint="#7B7B93"
-                            android:textSize="13sp" />
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:src="@android:drawable/ic_btn_speak_now"
-                            app:tint="#7B7B93" />
-                    </LinearLayout>
-
-                    <!-- Marker -->
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -379,64 +249,15 @@
                         app:layout_constraintTop_toTopOf="@id/mapPlaceholder"
                         app:tint="#4CAF50" />
 
-                    <!-- Location details card -->
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
+                    <Button
+                        android:id="@+id/openMapBtn"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Open in Google Maps"
                         android:layout_margin="16dp"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="4dp"
-                        app:layout_constraintBottom_toBottomOf="@id/mapPlaceholder">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Location detail"
-                                android:textColor="#2D3A5F"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
-                                    android:background="@drawable/social_button_bg"
-                                    android:padding="8dp"
-                                    android:src="@android:drawable/ic_menu_mylocation"
-                                    app:tint="#2D3A5F" />
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="12dp"
-                                    android:layout_weight="1"
-                                    android:text="House 123, Block Y, Phase 3, DHA, Lahore, Pakistan"
-                                    android:textColor="#7B7B93"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
-
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="48dp"
-                                android:layout_marginTop="12dp"
-                                android:backgroundTint="#8BC34A"
-                                android:text="Choose Location"
-                                android:textAllCaps="false"
-                                android:textColor="@android:color/white"
-                                app:cornerRadius="12dp" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                        android:backgroundTint="#234F68"
+                        app:layout_constraintBottom_toBottomOf="@id/mapPlaceholder"
+                        app:layout_constraintEnd_toEndOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -444,7 +265,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Floating Button Container -->
     <FrameLayout
         android:id="@+id/bottomAction"
         android:layout_width="match_parent"

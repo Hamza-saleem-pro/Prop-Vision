@@ -3,12 +3,10 @@ package com.example.propvision
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,29 +14,33 @@ class HomeActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_home)
 
-        val rootLayout = findViewById<View>(R.id.main)
-        ViewCompat.setOnApplyWindowInsetsListener(rootLayout) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, 0)
-            insets
+        val isAdmin = intent.getBooleanExtra("IS_ADMIN", false)
+        if (isAdmin) {
+            findViewById<TextView>(R.id.greeting).text = "Admin Dashboard"
+            findViewById<TextView>(R.id.discoverTitle).text = "Manage All Properties"
+            Toast.makeText(this, "Welcome to Admin Mode", Toast.LENGTH_LONG).show()
         }
 
-        // Setup Search icon navigation
-        findViewById<ImageView>(R.id.nav_explore).setOnClickListener {
-            val intent = Intent(this, ExplorePropertiesActivity::class.java)
-            startActivity(intent)
+        // Bottom Navigation linking
+        findViewById<View>(R.id.nav_explore).setOnClickListener {
+            startActivity(Intent(this, ExplorePropertiesActivity::class.java))
         }
 
-        // Setup Add Property navigation
-        findViewById<FrameLayout>(R.id.nav_add).setOnClickListener {
-            val intent = Intent(this, AddPropertyActivity::class.java)
-            startActivity(intent)
+        findViewById<View>(R.id.nav_add).setOnClickListener {
+            startActivity(Intent(this, AddPropertyActivity::class.java))
         }
 
-        // Setup Profile navigation
-        findViewById<ImageView>(R.id.nav_profile).setOnClickListener {
-            val intent = Intent(this, CreateProfileActivity::class.java)
-            startActivity(intent)
+        findViewById<View>(R.id.nav_market).setOnClickListener {
+            startActivity(Intent(this, MyAdsActivity::class.java))
+        }
+
+        findViewById<View>(R.id.nav_profile).setOnClickListener {
+            startActivity(Intent(this, CreateProfileActivity::class.java))
+        }
+
+        // Search Bar Logic (Simple Toast for now)
+        findViewById<View>(R.id.searchBar).setOnClickListener {
+            Toast.makeText(this, "Search functionality coming soon", Toast.LENGTH_SHORT).show()
         }
     }
 }
