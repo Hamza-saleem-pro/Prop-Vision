@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PropVision">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA53Ghr_AJMHiI0la08j9Z8K3vUBwCS9tQ" />
 
         <activity
             android:name=".MainActivity"
@@ -26,7 +35,6 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
-
         <activity
             android:name=".MyAdsActivity"
             android:exported="false" />
@@ -35,6 +43,9 @@
             android:exported="false" />
         <activity
             android:name=".AddPropertyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectLocationActivity"
             android:exported="false" />
         <activity
             android:name=".ExplorePropertiesActivity"

@@ -8,260 +8,352 @@
     android:background="#F5F6F8"
     tools:context=".AddPropertyActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
-            android:paddingBottom="10dp"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <ImageView
-                android:id="@+id/backBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/social_button_bg"
-                android:padding="12dp"
-                android:src="@android:drawable/ic_menu_revert"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="#2D3A5F" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Listing"
-                android:textColor="#2D3A5F"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="10dp"
             android:paddingBottom="120dp">
 
-            <TextView
-                android:id="@+id/mainTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Almost finish, complete\nthe listing"
-                android:textColor="#2D3A5F"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Sell Price"
-                android:textColor="#2D3A5F"
-                android:textStyle="bold" />
-
-            <LinearLayout
+            <!-- Header -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input_background"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="15dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs." android:textColor="#2D3A5F" />
-                <EditText
-                    android:id="@+id/sellPriceInput"
-                    android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="40dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/backBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/social_button_bg"
+                    android:padding="12dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="#2D3A5F" />
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="180,000"
+                    android:text="Add Listing"
                     android:textColor="#2D3A5F"
-                    android:textColorHint="#7B7B93"
-                    android:inputType="number"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Rent Price"
-                android:textColor="#2D3A5F"
-                android:textStyle="bold" />
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input_background"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="15dp">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs." android:textColor="#2D3A5F" />
-                <EditText
-                    android:id="@+id/rentPriceInput"
-                    android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/mainTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="315"
+                    android:text="Almost finish, complete\nthe listing"
                     android:textColor="#2D3A5F"
-                    android:textColorHint="#7B7B93"
-                    android:inputType="number"
-                    android:layout_marginStart="8dp" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/month" android:textColor="#7B7B93" />
-            </LinearLayout>
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Property Features"
-                android:textColor="#2D3A5F"
-                android:textStyle="bold" />
+                <!-- Property Type Selection -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Property Type"
+                    android:textColor="#2D3A5F"
+                    android:textStyle="bold" />
 
-            <!-- Bedroom -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/social_button_bg"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="15dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bedroom" android:textColor="#2D3A5F" />
-                <ImageView android:id="@+id/btnMinusBedroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
-                <TextView android:id="@+id/txtBedroomCount" android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
-                <ImageView android:id="@+id/btnAddBedroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
-            </LinearLayout>
-
-            <!-- Bathroom -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/social_button_bg"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="15dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bathroom" android:textColor="#2D3A5F" />
-                <ImageView android:id="@+id/btnMinusBathroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
-                <TextView android:id="@+id/txtBathroomCount" android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
-                <ImageView android:id="@+id/btnAddBathroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
-            </LinearLayout>
-
-            <!-- Kitchen -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/social_button_bg"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="15dp">
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Kitchen" android:textColor="#2D3A5F" />
-                <ImageView android:id="@+id/btnMinusKitchen" android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
-                <TextView android:id="@+id/txtKitchenCount" android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
-                <ImageView android:id="@+id/btnAddKitchen" android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Add Photos"
-                android:textColor="#2D3A5F"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    app:cardCornerRadius="16dp">
-                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/ic_property_placeholder" android:scaleType="centerCrop" />
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/addPhotoBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="12dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardBackgroundColor="#F0F0F0">
-                    <ImageView android:layout_width="24dp" android:layout_height="24dp" android:layout_gravity="center" android:src="@android:drawable/ic_input_add" />
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Location"
-                android:textColor="#2D3A5F"
-                android:textStyle="bold" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/mapContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="0dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white">
-
-                    <View
-                        android:id="@+id/mapPlaceholder"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:background="#E8F5E9"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@android:drawable/ic_menu_mylocation"
-                        app:layout_constraintBottom_toBottomOf="@id/mapPlaceholder"
-                        app:layout_constraintEnd_toEndOf="@id/mapPlaceholder"
-                        app:layout_constraintStart_toStartOf="@id/mapPlaceholder"
-                        app:layout_constraintTop_toTopOf="@id/mapPlaceholder"
-                        app:tint="#4CAF50" />
-
-                    <Button
-                        android:id="@+id/openMapBtn"
+                    android:layout_marginTop="12dp"
+                    android:scrollbars="none">
+                    <LinearLayout
+                        android:id="@+id/propertyTypeGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Open in Google Maps"
-                        android:layout_margin="16dp"
-                        android:backgroundTint="#234F68"
-                        app:layout_constraintBottom_toBottomOf="@id/mapPlaceholder"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/typeHouse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="House"
+                            android:paddingHorizontal="20dp"
+                            android:paddingVertical="10dp"
+                            android:background="@drawable/social_button_bg"
+                            android:textColor="#2D3A5F"
+                            android:layout_marginEnd="10dp"/>
+                        <TextView
+                            android:id="@+id/typeApartment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Apartment"
+                            android:paddingHorizontal="20dp"
+                            android:paddingVertical="10dp"
+                            android:background="@drawable/social_button_bg"
+                            android:textColor="#2D3A5F"
+                            android:layout_marginEnd="10dp"/>
+                        <TextView
+                            android:id="@+id/typeVilla"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Villa"
+                            android:paddingHorizontal="20dp"
+                            android:paddingVertical="10dp"
+                            android:background="@drawable/social_button_bg"
+                            android:textColor="#2D3A5F"
+                            android:layout_marginEnd="10dp"/>
+                        <TextView
+                            android:id="@+id/typeFlat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Flat"
+                            android:paddingHorizontal="20dp"
+                            android:paddingVertical="10dp"
+                            android:background="@drawable/social_button_bg"
+                            android:textColor="#2D3A5F" />
+                    </LinearLayout>
+                </HorizontalScrollView>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Sell Price"
+                    android:textColor="#2D3A5F"
+                    android:textStyle="bold" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/input_background"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs." android:textColor="#2D3A5F" />
+                    <EditText
+                        android:id="@+id/sellPriceInput"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="180,000"
+                        android:textColor="#2D3A5F"
+                        android:textColorHint="#7B7B93"
+                        android:inputType="number"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Rent Price"
+                    android:textColor="#2D3A5F"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/input_background"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rs." android:textColor="#2D3A5F" />
+                    <EditText
+                        android:id="@+id/rentPriceInput"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="315"
+                        android:textColor="#2D3A5F"
+                        android:textColorHint="#7B7B93"
+                        android:inputType="number"
+                        android:layout_marginStart="8dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/month" android:textColor="#7B7B93" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Property Features"
+                    android:textColor="#2D3A5F"
+                    android:textStyle="bold" />
+
+                <!-- Bedroom -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/social_button_bg"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bedroom" android:textColor="#2D3A5F" />
+                    <ImageView android:id="@+id/btnMinusBedroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
+                    <TextView android:id="@+id/txtBedroomCount" android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
+                    <ImageView android:id="@+id/btnAddBedroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
+                </LinearLayout>
+
+                <!-- Bathroom -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/social_button_bg"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bathroom" android:textColor="#2D3A5F" />
+                    <ImageView android:id="@+id/btnMinusBathroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
+                    <TextView android:id="@+id/txtBathroomCount" android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
+                    <ImageView android:id="@+id/btnAddBathroom" android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
+                </LinearLayout>
+
+                <!-- Kitchen -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/social_button_bg"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Kitchen" android:textColor="#2D3A5F" />
+                    <ImageView android:id="@+id/btnMinusKitchen" android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_minus" app:tint="#7B7B93" />
+                    <TextView android:id="@+id/txtKitchenCount" android:layout_width="40dp" android:layout_height="wrap_content" android:text="1" android:textAlignment="center" android:textColor="#2D3A5F" android:textStyle="bold" />
+                    <ImageView android:id="@+id/btnAddKitchen" android:layout_width="32dp" android:layout_height="32dp" android:src="@android:drawable/ic_input_add" app:tint="#234F68" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/photoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Add Photos (0/12)"
+                    android:textColor="#2D3A5F"
+                    android:textStyle="bold" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/photoContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/addPhotoBtn"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardBackgroundColor="#F0F0F0">
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@android:drawable/ic_input_add" />
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Location"
+                    android:textColor="#2D3A5F"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/mapContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white">
+
+                        <View
+                            android:id="@+id/mapPlaceholder"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:background="#E8F5E9"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@android:drawable/ic_menu_mylocation"
+                            app:layout_constraintBottom_toBottomOf="@id/mapPlaceholder"
+                            app:layout_constraintEnd_toEndOf="@id/mapPlaceholder"
+                            app:layout_constraintStart_toStartOf="@id/mapPlaceholder"
+                            app:layout_constraintTop_toTopOf="@id/mapPlaceholder"
+                            app:tint="#4CAF50" />
+
+                        <Button
+                            android:id="@+id/openMapBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Location"
+                            android:layout_margin="16dp"
+                            android:backgroundTint="#234F68"
+                            app:layout_constraintBottom_toBottomOf="@id/mapPlaceholder"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtSelectedLocation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No location selected"
+                        android:textColor="#7B7B93"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/btnRemoveLocation"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_close_clear_cancel"
+                        android:visibility="gone"
+                        app:tint="#FF0000" />
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
