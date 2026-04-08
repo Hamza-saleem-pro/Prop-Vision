@@ -48,6 +48,9 @@
             android:name=".SelectLocationActivity"
             android:exported="false" />
         <activity
+            android:name=".NotificationsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ExplorePropertiesActivity"
             android:exported="false" />
         <activity

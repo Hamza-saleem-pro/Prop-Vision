@@ -24,6 +24,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import coil.load
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AddPropertyActivity : AppCompatActivity() {
 
@@ -86,10 +89,7 @@ class AddPropertyActivity : AppCompatActivity() {
 
     private fun setupTypeSelection() {
         val types = listOf(typeHouse, typeApartment, typeVilla, typeFlat)
-        
-        // Initial selection: House is dark, others are white
         selectType(typeHouse)
-
         types.forEach { textView ->
             textView.setOnClickListener {
                 selectType(textView)
@@ -105,12 +105,10 @@ class AddPropertyActivity : AppCompatActivity() {
         val textColorSelected = Color.WHITE
 
         types.forEach { 
-            // Reset all to white background and dark text
             it.backgroundTintList = ColorStateList.valueOf(unselectedColor)
             it.setTextColor(textColorUnselected)
         }
         
-        // Apply dark background and white text to selected button
         textView.backgroundTintList = ColorStateList.valueOf(selectedColor)
         textView.setTextColor(textColorSelected)
         selectedType = textView.text.toString()
@@ -159,7 +157,6 @@ class AddPropertyActivity : AppCompatActivity() {
             Toast.makeText(this, "Maximum 12 images allowed", Toast.LENGTH_SHORT).show()
             return
         }
-
         val toAdd = uris.take(remaining)
         selectedImages.addAll(toAdd)
         updatePhotoUI()
@@ -185,10 +182,8 @@ class AddPropertyActivity : AppCompatActivity() {
                 selectedImages.removeAt(index)
                 updatePhotoUI()
             }
-
             photoContainer.addView(itemView, photoContainer.childCount - 1)
         }
-
         photoTitle.text = "Add Photos (${selectedImages.size}/$MAX_IMAGES)"
         addPhotoBtn.visibility = if (selectedImages.size >= MAX_IMAGES) View.GONE else View.VISIBLE
     }
@@ -326,6 +321,16 @@ class AddPropertyActivity : AppCompatActivity() {
             address = selectedAddress!!,
             latitude = selectedLat,
             longitude = selectedLng
+        )
+
+        // Add Notification
+        val time = SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date())
+        NotificationRepository.addNotification(
+            Notification(
+                title = "Listing Live",
+                message = "Your $selectedType in $selectedAddress is now live!",
+                time = "Just now"
+            )
         )
 
         val resultIntent = Intent()

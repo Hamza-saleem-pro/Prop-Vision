@@ -5,8 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -21,6 +24,9 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var newListingsContainer: LinearLayout
     private lateinit var tvSelectedLocation: TextView
     private lateinit var newListingsLabel: TextView
+    private lateinit var notificationBadge: View
+    private lateinit var etSearchInput: EditText
+    
     private val propertyList = mutableListOf<Property>()
     private var currentFilterLocation: String? = null
 
@@ -36,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
             property?.let {
                 propertyList.add(0, it) // Add to the top of the list
                 updateNewListingsUI()
+                updateNotificationBadge() // New listing added a notification, update badge
             }
         }
     }
@@ -61,18 +68,18 @@ class HomeActivity : AppCompatActivity() {
         newListingsContainer = findViewById(R.id.newListingsContainer)
         tvSelectedLocation = findViewById(R.id.tvLocationName)
         newListingsLabel = findViewById(R.id.tvNewListingsTitle)
-        
-        val isAdmin = intent.getBooleanExtra("IS_ADMIN", false)
-        if (isAdmin) {
-            findViewById<TextView>(R.id.greeting).text = "Admin Dashboard"
-            findViewById<TextView>(R.id.discoverTitle).text = "Manage All Properties"
-            Toast.makeText(this, "Welcome to Admin Mode", Toast.LENGTH_LONG).show()
-        }
+        notificationBadge = findViewById(R.id.notificationBadge)
+        etSearchInput = findViewById(R.id.etSearchInput)
 
         // Location Picker logic
         findViewById<View>(R.id.locationPicker).setOnClickListener {
             val intent = Intent(this, SelectLocationActivity::class.java)
             locationPickerLauncher.launch(intent)
+        }
+
+        // Notification Bell logic
+        findViewById<View>(R.id.notificationHub).setOnClickListener {
+            startActivity(Intent(this, NotificationsActivity::class.java))
         }
 
         // Bottom Navigation linking
@@ -93,23 +100,59 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, CreateProfileActivity::class.java))
         }
 
-        // Search Bar Logic (Simple Toast for now)
-        findViewById<View>(R.id.searchBar).setOnClickListener {
-            Toast.makeText(this, "Search functionality coming soon", Toast.LENGTH_SHORT).show()
-        }
+        // Search Bar Filtering Logic
+        etSearchInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateNewListingsUI(s.toString().trim().lowercase())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
-    private fun updateNewListingsUI() {
+    override fun onResume() {
+        super.onResume()
+        updateNotificationBadge()
+    }
+
+    private fun updateNotificationBadge() {
+        val unreadCount = NotificationRepository.getUnreadCount()
+        notificationBadge.visibility = if (unreadCount > 0) View.VISIBLE else View.GONE
+    }
+
+    private fun updateNewListingsUI(searchQuery: String = "") {
         newListingsContainer.removeAllViews()
         
-        // Filter properties based on selected location (simple string matching for simulation)
-        val filteredList = if (currentFilterLocation == null) {
-            propertyList
-        } else {
-            propertyList.filter { 
-                it.address.contains(currentFilterLocation!!, ignoreCase = true) || 
-                currentFilterLocation!!.contains(it.address, ignoreCase = true)
+        val filteredList = propertyList.filter { property ->
+            val type = property.propertyType.lowercase()
+            val isSell = property.sellPrice != null
+            val isRent = property.rentPrice != null
+            
+            val matchesSearch = when {
+                searchQuery.isEmpty() -> true
+                searchQuery == "apartment" -> type == "apartment"
+                searchQuery == "apartment rent" -> type == "apartment" && isRent
+                searchQuery == "apartment sell" -> type == "apartment" && isSell
+                searchQuery == "house" -> type == "house"
+                searchQuery == "house rent" -> type == "house" && isRent
+                searchQuery == "house sell" -> type == "house" && isSell
+                searchQuery == "villa" -> type == "villa"
+                searchQuery == "villa rent" -> type == "villa" && isRent
+                searchQuery == "villa sell" -> type == "villa" && isSell
+                searchQuery == "flat" -> type == "flat"
+                searchQuery == "flat rent" -> type == "flat" && isRent
+                searchQuery == "flat sell" -> type == "flat" && isSell
+                else -> property.address.lowercase().contains(searchQuery) || type.contains(searchQuery)
             }
+
+            val matchesLocation = if (currentFilterLocation == null) {
+                true
+            } else {
+                property.address.contains(currentFilterLocation!!, ignoreCase = true) ||
+                currentFilterLocation!!.contains(property.address, ignoreCase = true)
+            }
+
+            matchesSearch && matchesLocation
         }
 
         findViewById<View>(R.id.newListingsSection).visibility = if (filteredList.isEmpty()) View.GONE else View.VISIBLE
@@ -123,12 +166,10 @@ class HomeActivity : AppCompatActivity() {
             val tvLocation = itemView.findViewById<TextView>(R.id.propertyLocation)
             val tvPrice = itemView.findViewById<TextView>(R.id.propertyPrice)
 
-            // Load the first image
             if (property.imageUris.isNotEmpty()) {
                 ivImage.load(Uri.parse(property.imageUris[0]))
             }
 
-            // Construct title from type and features
             tvName.text = "${property.propertyType} - ${property.bedroomCount} Bed"
             tvLocation.text = property.address
             
