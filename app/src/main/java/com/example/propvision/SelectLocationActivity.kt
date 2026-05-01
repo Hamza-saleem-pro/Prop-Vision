@@ -101,6 +101,7 @@ class SelectLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         if (locationName.isNotEmpty()) {
             val geocoder = Geocoder(this, Locale.getDefault())
             try {
+                @Suppress("DEPRECATION")
                 val addresses = geocoder.getFromLocationName(locationName, 1)
                 if (!addresses.isNullOrEmpty()) {
                     val address = addresses[0]
@@ -180,6 +181,7 @@ class SelectLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         Thread {
             try {
                 val geocoder = Geocoder(this, Locale.getDefault())
+                @Suppress("DEPRECATION")
                 val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
                 if (!addresses.isNullOrEmpty()) {
                     val address = addresses[0]

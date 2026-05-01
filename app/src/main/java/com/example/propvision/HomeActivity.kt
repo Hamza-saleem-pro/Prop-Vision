@@ -40,9 +40,9 @@ class HomeActivity : AppCompatActivity() {
             }
             
             property?.let {
-                propertyList.add(0, it) // Add to the top of the list
-                updateNewListingsUI()
-                updateNotificationBadge() // New listing added a notification, update badge
+                propertyList.add(0, it)
+                updateNewListingsUI(etSearchInput.text.toString())
+                updateNotificationBadge()
             }
         }
     }
@@ -54,8 +54,7 @@ class HomeActivity : AppCompatActivity() {
                 currentFilterLocation = it
                 tvSelectedLocation.text = it
                 newListingsLabel.text = "Houses near $it"
-                Toast.makeText(this, "Filtering houses near: $it", Toast.LENGTH_SHORT).show()
-                updateNewListingsUI()
+                updateNewListingsUI(etSearchInput.text.toString())
             }
         }
     }
@@ -96,8 +95,14 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, MyAdsActivity::class.java))
         }
 
+        // UPDATED: Navigate to UserProfileActivity instead of CreateProfileActivity
         findViewById<View>(R.id.nav_profile).setOnClickListener {
-            startActivity(Intent(this, CreateProfileActivity::class.java))
+            startActivity(Intent(this, UserProfileActivity::class.java))
+        }
+        
+        // Also update the top profile card if it exists
+        findViewById<View>(R.id.profileCard)?.setOnClickListener {
+            startActivity(Intent(this, UserProfileActivity::class.java))
         }
 
         // Search Bar Filtering Logic

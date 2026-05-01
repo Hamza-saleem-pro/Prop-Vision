@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -23,6 +27,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA53Ghr_AJMHiI0la08j9Z8K3vUBwCS9tQ" />
 
+        <!-- Facebook App ID -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <!-- Google Sign-In -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -35,24 +49,35 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
+
         <activity
             android:name=".MyAdsActivity"
             android:exported="false" />
+
         <activity
             android:name=".CreateProfileActivity"
             android:exported="false" />
+
         <activity
             android:name=".AddPropertyActivity"
             android:exported="false" />
+
         <activity
             android:name=".SelectLocationActivity"
             android:exported="false" />
+
         <activity
             android:name=".NotificationsActivity"
             android:exported="false" />
+
         <activity
             android:name=".ExplorePropertiesActivity"
             android:exported="false" />
+
         <activity
             android:name=".SplashActivity"
             android:exported="false" />

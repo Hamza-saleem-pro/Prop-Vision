@@ -324,7 +324,6 @@ class AddPropertyActivity : AppCompatActivity() {
         )
 
         // Add Notification
-        val time = SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date())
         NotificationRepository.addNotification(
             Notification(
                 title = "Listing Live",

@@ -1,3 +1,60 @@
 <resources>
     <string name="app_name">Prop Vision</string>
+
+    <!-- Create Profile -->
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="bio">Bio</string>
+    <string name="continue_btn">Continue</string>
+
+    <!-- Hints -->
+    <string name="hint_full_name">John Doe</string>
+    <string name="hint_phone">+92 300 1234567</string>
+    <string name="hint_email">example@mail.com</string>
+    <string name="hint_password">••••••••</string>
+    <string name="hint_dob">DD/MM/YYYY</string>
+    <string name="hint_bio">Tell us about yourself...</string>
+
+    <!-- Error Messages -->
+    <string name="error_full_name_required">Full name is required</string>
+    <string name="error_phone_required">Phone number is required</string>
+    <string name="error_email_required">Email is required</string>
+    <string name="error_email_invalid">Please enter a valid email</string>
+    <string name="error_password_required">Password is required</string>
+    <string name="error_password_short">Password must be at least 6 characters</string>
+    <string name="error_confirm_password_required">Confirm password is required</string>
+    <string name="error_passwords_mismatch">Passwords do not match</string>
+    <string name="error_dob_required">Date of birth is required</string>
+    <string name="error_country_required">Please select a country</string>
+    <string name="error_city_required">Please select a city</string>
+    <string name="error_phone_invalid">Please enter a valid phone number</string>
+
+    <!-- Success Messages -->
+    <string name="success_account_created">Account created successfully!</string>
+    <string name="success_email_verification_sent">Verification email sent. Please check your inbox.</string>
+    <string name="success_phone_verified">Phone number verified successfully</string>
+    <string name="success_image_uploaded">Profile image updated</string>
+
+    <!-- Image Picker Options -->
+    <string name="select_profile_image">Select Profile Image</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- OTP -->
+    <string name="verify_phone">Verify Phone Number</string>
+    <string name="enter_otp">Enter OTP sent to your phone</string>
+    <string name="verify">Verify</string>
+    <string name="resend_otp">Resend OTP</string>
+
+    <!-- Social Login -->
+    <string name="facebook_app_id">your_facebook_app_id_here</string>
+    <string name="fb_login_protocol_scheme">fb_your_facebook_app_id_here</string>
+    <string name="default_web_client_id">your_google_web_client_id_here</string>
 </resources>
