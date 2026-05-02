@@ -167,7 +167,7 @@ class HomeActivity : AppCompatActivity() {
                             bedroomCount = (doc.getLong("bedroomCount") ?: 1L).toInt(),
                             bathroomCount = (doc.getLong("bathroomCount") ?: 1L).toInt(),
                             kitchenCount = (doc.getLong("kitchenCount") ?: 1L).toInt(),
-                            imageUris = doc.get("imageUris") as? List<String> ?: emptyList(),
+                            imageUris = extractImageUris(doc.get("imageUris")),
                             address = doc.getString("address") ?: "",
                             latitude = doc.getDouble("latitude") ?: 0.0,
                             longitude = doc.getDouble("longitude") ?: 0.0,
@@ -404,12 +404,7 @@ class HomeActivity : AppCompatActivity() {
         newListingsContainer.removeAllViews()
         
         val filteredList = propertyList.filter { property ->
-            val type = property.propertyType.lowercase()
-            
-            val matchesSearch = when {
-                searchQuery.isEmpty() -> true
-                else -> property.address.lowercase().contains(searchQuery) || type.contains(searchQuery)
-            }
+            val matchesSearch = PropertySearchUtils.matchesQuery(property, searchQuery)
 
             val matchesLocation = if (currentFilterLocation == null) {
                 true
@@ -520,5 +515,11 @@ class HomeActivity : AppCompatActivity() {
         val results = FloatArray(1)
         Location.distanceBetween(lat1, lng1, lat2, lng2, results)
         return results[0] <= radiusKm * 1000f
+    }
+
+    private fun extractImageUris(value: Any?): List<String> {
+        return (value as? List<*>)
+            ?.mapNotNull { it as? String }
+            ?: emptyList()
     }
 }

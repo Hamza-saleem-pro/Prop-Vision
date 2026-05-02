@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
     implementation(libs.androidx.core.splashscreen)
+    implementation("androidx.security:security-crypto:1.1.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.facebook.android:facebook-login:16.3.0")
     testImplementation(libs.junit)

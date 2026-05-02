@@ -73,6 +73,9 @@
     <string name="nearby_houses_format">Homes near %1$s</string>
     <string name="featured_estates_near_you">Featured Estates Near You</string>
 
+    <!-- Explore Search -->
+    <string name="explore_search_summary_format">Found %1$d estates</string>
+
     <!-- Property Details -->
     <string name="open_property_location">View all on map</string>
 </resources>
