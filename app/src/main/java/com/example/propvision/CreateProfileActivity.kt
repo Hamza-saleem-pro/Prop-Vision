@@ -191,7 +191,7 @@ class CreateProfileActivity : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
-                val formattedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear)
+                val formattedDate = String.format(Locale.getDefault(), "%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear)
                 etDOB.setText(formattedDate)
             },
             year,
@@ -257,7 +257,7 @@ class CreateProfileActivity : AppCompatActivity() {
     private fun openCamera() {
         val photoFile = File.createTempFile("IMG_", ".jpg")
         selectedImageUri = Uri.fromFile(photoFile)
-        cameraLauncher.launch(selectedImageUri)
+        cameraLauncher.launch(selectedImageUri!!)
     }
 
     private fun openGallery() {
@@ -393,13 +393,26 @@ class CreateProfileActivity : AppCompatActivity() {
             return
         }
 
-        val storageRef = storage.reference.child("profile_images/$userId.jpg")
+        val storageRef = storage.reference.child(ProfileImageStoragePaths.profileImagePath(userId))
+        val inputStream = contentResolver.openInputStream(selectedImageUri!!)
 
-        storageRef.putFile(selectedImageUri!!)
-            .addOnSuccessListener {
-                storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    saveUserDataToFirestore(userId, uri.toString())
+        if (inputStream == null) {
+            showLoadingIndicator(false)
+            Toast.makeText(this, "Could not read selected image.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val imageBytes = inputStream.use { it.readBytes() }
+
+        storageRef.putBytes(imageBytes)
+            .continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let { throw it }
                 }
+                storageRef.downloadUrl
+            }
+            .addOnSuccessListener { uri ->
+                saveUserDataToFirestore(userId, uri.toString())
             }
             .addOnFailureListener { exception ->
                 showLoadingIndicator(false)

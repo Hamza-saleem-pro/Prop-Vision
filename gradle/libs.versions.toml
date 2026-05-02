@@ -1,26 +1,21 @@
 [versions]
-agp = "8.3.0"
-kotlin = "1.9.0"
-coreKtx = "1.12.0"
+agp = "9.2.0"
+kotlin = "2.2.10"
+googleGmsGoogleServices = "4.4.4"
+coreKtx = "1.17.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-appcompat = "1.6.1"
-material = "1.11.0"
-activity = "1.8.2"
-constraintlayout = "2.1.4"
-coil = "2.5.0"
-gridlayout = "1.0.0"
-playServicesMaps = "18.2.0"
-playServicesLocation = "21.1.0"
-googleGmsGoogleServices = "4.4.1"
-firebaseDatabase = "20.3.1"
-firebaseAuth = "22.3.1"
-firebaseFirestore = "24.10.3"
-firebaseStorage = "20.3.0"
-coreSplashscreen = "1.0.1"
-googleSignIn = "20.7.0"
-facebookLogin = "16.3.0"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+appcompat = "1.7.1"
+material = "1.13.0"
+activity = "1.12.4"
+constraintlayout = "2.2.1"
+coil = "2.7.0"
+gridlayout = "1.1.0"
+playServicesMaps = "19.0.0"
+playServicesLocation = "21.3.0"
+firebaseBom = "34.12.0"
+splashscreen = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,15 +30,14 @@ androidx-gridlayout = { group = "androidx.gridlayout", name = "gridlayout", vers
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
-firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
-firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
-firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
-androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
-google_sign_in = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "googleSignIn" }
-facebook_login = { group = "com.facebook.android", name = "facebook-login", version.ref = "facebookLogin" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }

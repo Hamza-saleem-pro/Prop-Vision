@@ -19,7 +19,7 @@
     <string name="hint_email">example@mail.com</string>
     <string name="hint_password">••••••••</string>
     <string name="hint_dob">DD/MM/YYYY</string>
-    <string name="hint_bio">Tell us about yourself...</string>
+    <string name="hint_bio">Tell us about yourself…</string>
 
     <!-- Error Messages -->
     <string name="error_full_name_required">Full name is required</string>
@@ -41,6 +41,11 @@
     <string name="success_phone_verified">Phone number verified successfully</string>
     <string name="success_image_uploaded">Profile image updated</string>
 
+    <!-- Profile -->
+    <string name="profile_dob_value">%1$s</string>
+    <string name="profile_location_value">%1$s, %2$s</string>
+    <string name="no_bio_available">No bio available.</string>
+
     <!-- Image Picker Options -->
     <string name="select_profile_image">Select Profile Image</string>
     <string name="camera">Camera</string>
@@ -57,4 +62,17 @@
     <string name="facebook_app_id">your_facebook_app_id_here</string>
     <string name="fb_login_protocol_scheme">fb_your_facebook_app_id_here</string>
     <string name="default_web_client_id">your_google_web_client_id_here</string>
+
+    <!-- Home -->
+    <string name="featured_banner_title">Featured\nEstates</string>
+    <string name="featured_banner_subtitle">Handpicked homes with verified details near your preferred area.</string>
+    <string name="featured_banner_title_alt">Hot Picks\nThis Week</string>
+    <string name="featured_banner_subtitle_alt">Explore trending apartments, villas, and family homes.</string>
+    <string name="top_locations">Top Locations</string>
+    <string name="explore_nearby_estates">Explore Nearby Estates</string>
+    <string name="nearby_houses_format">Homes near %1$s</string>
+    <string name="featured_estates_near_you">Featured Estates Near You</string>
+
+    <!-- Property Details -->
+    <string name="open_property_location">View all on map</string>
 </resources>

@@ -13,10 +13,8 @@
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:elevation="4dp"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="40dp"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="48dp"
         android:paddingBottom="16dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -25,61 +23,65 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/social_button_bg"
+            android:backgroundTint="@android:color/white"
             android:gravity="center"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@id/notificationHub"
-            app:layout_constraintHorizontal_bias="0">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@android:drawable/ic_menu_mylocation"
-                app:tint="#7B7B93" />
+                android:src="@drawable/ic_location_city"
+                app:tint="#234F68" />
 
             <TextView
                 android:id="@+id/tvLocationName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Lahore, Pakistan"
+                android:ellipsize="end"
+                android:maxWidth="140dp"
+                android:singleLine="true"
+                android:text="Jakarta, Indonesia"
                 android:textColor="#2D3A5F"
                 android:textSize="14sp"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:maxWidth="150dp" />
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:layout_marginStart="4dp"
-                android:src="@android:drawable/arrow_down_float" />
+                android:src="@android:drawable/arrow_down_float"
+                app:tint="#2D3A5F" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/profileCard"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            app:cardCornerRadius="22.5dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:id="@+id/ivHomeProfile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_avatar" />
+                android:src="@drawable/profile_icon_new" />
         </androidx.cardview.widget.CardView>
 
         <FrameLayout
             android:id="@+id/notificationHub"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/profileCard"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -87,18 +89,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/social_button_bg"
-                android:padding="10dp"
-                android:src="@android:drawable/ic_popup_reminder"
-                app:tint="#7B7B93" />
+                android:backgroundTint="@android:color/white"
+                android:padding="12dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_notification"
+                app:tint="#2D3A5F" />
 
-            <View
+            <androidx.cardview.widget.CardView
                 android:id="@+id/notificationBadge"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_gravity="top|end"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="6dp"
-                android:background="#FF5252"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardBackgroundColor="#FF5252"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
                 android:visibility="gone" />
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -108,32 +114,32 @@
         android:id="@+id/mainScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavContainer">
+        android:clipToPadding="false"
+        android:paddingBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="20dp">
+            android:orientation="vertical">
 
             <!-- Welcome/Greeting Section -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="10dp">
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="8dp">
 
                 <TextView
                     android:id="@+id/greeting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hey!"
-                    android:textColor="#7B7B93"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColor="#2D3A5F"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/discoverTitle"
@@ -142,39 +148,45 @@
                     android:layout_marginTop="4dp"
                     android:text="Let's start exploring"
                     android:textColor="#2D3A5F"
-                    android:textSize="28sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/greeting" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textSize="24sp" />
+            </LinearLayout>
 
             <!-- Search Bar -->
             <LinearLayout
                 android:id="@+id/searchBar"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/input_background"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/social_button_bg"
+                android:backgroundTint="@android:color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="15dp">
+                android:paddingHorizontal="16dp">
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@android:drawable/ic_menu_search"
+                    android:src="@drawable/ic_explore_nav"
                     app:tint="#7B7B93" />
+
                 <EditText
                     android:id="@+id/etSearchInput"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="12dp"
+                    android:layout_weight="1"
                     android:background="@null"
-                    android:hint="Search House, Apartment, etc..."
-                    android:textSize="14sp"
-                    android:inputType="text" />
+                    android:hint="Search House, Apartment, etc"
+                    android:inputType="text"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="24dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:background="#EEEEEE" />
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
@@ -182,75 +194,359 @@
                     app:tint="#7B7B93" />
             </LinearLayout>
 
-            <!-- Dynamic New Listings -->
-            <LinearLayout
-                android:id="@+id/newListingsSection"
+            <!-- Categories -->
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                android:layout_marginTop="24dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="24dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="20dp">
+                    android:orientation="horizontal">
+
+                    <!-- Category All -->
                     <TextView
-                        android:id="@+id/tvNewListingsTitle"
+                        android:id="@+id/filterAll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="New Listings"
-                        android:textColor="#2D3A5F"
-                        android:textSize="18sp"
+                        android:background="@drawable/social_button_bg"
+                        android:backgroundTint="#234F68"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="12dp"
+                        android:text="All"
+                        android:textColor="@android:color/white"
                         android:textStyle="bold" />
-                </RelativeLayout>
-                <LinearLayout
-                    android:id="@+id/newListingsContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:layout_marginTop="12dp" />
-            </LinearLayout>
 
-            <!-- Featured Section -->
+                    <!-- Category House -->
+                    <TextView
+                        android:id="@+id/filterHouse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/social_button_bg"
+                        android:backgroundTint="@android:color/white"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="12dp"
+                        android:text="House"
+                        android:textColor="#2D3A5F" />
+
+                    <!-- Category Apartment -->
+                    <TextView
+                        android:id="@+id/filterApartment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/social_button_bg"
+                        android:backgroundTint="@android:color/white"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="12dp"
+                        android:text="Apartment"
+                        android:textColor="#2D3A5F" />
+
+                    <!-- Category Villa -->
+                    <TextView
+                        android:id="@+id/filterVilla"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/social_button_bg"
+                        android:backgroundTint="@android:color/white"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="12dp"
+                        android:text="Villa"
+                        android:textColor="#2D3A5F" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- Featured Banners -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="24dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/featuredCardPrimary"
+                        android:layout_width="280dp"
+                        android:layout_height="180dp"
+                        app:cardCornerRadius="24dp"
+                        app:cardElevation="0dp">
+
+                        <ImageView
+                            android:id="@+id/ivFeaturedPrimaryImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img1" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/splash_bk_gradient" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:padding="24dp">
+
+                            <TextView
+                                android:id="@+id/tvFeaturedPrimaryTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/featured_banner_title"
+                                android:textColor="@android:color/white"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvFeaturedPrimarySubtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/featured_banner_subtitle"
+                                android:textColor="@android:color/white"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/featuredCardSecondary"
+                        android:layout_width="280dp"
+                        android:layout_height="180dp"
+                        android:layout_marginStart="16dp"
+                        app:cardCornerRadius="24dp"
+                        app:cardElevation="0dp">
+
+                        <ImageView
+                            android:id="@+id/ivFeaturedSecondaryImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img1" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/splash_bk_gradient" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:padding="24dp">
+
+                            <TextView
+                                android:id="@+id/tvFeaturedSecondaryTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/featured_banner_title_alt"
+                                android:textColor="@android:color/white"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvFeaturedSecondarySubtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/featured_banner_subtitle_alt"
+                                android:textColor="@android:color/white"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- Top Locations Section -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingHorizontal="20dp">
+                android:layout_marginTop="32dp"
+                android:paddingHorizontal="24dp">
+
                 <TextView
-                    android:id="@+id/featuredLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Featured Estates"
+                    android:text="@string/top_locations"
                     android:textColor="#2D3A5F"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
                 <TextView
-                    android:id="@+id/viewAllFeatured"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignBaseline="@id/featuredLabel"
-                    android:text="View All"
+                    android:text="explore"
                     android:textColor="#7B7B93"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:clipToPadding="false"
-                android:paddingHorizontal="20dp"
+                android:paddingHorizontal="24dp"
                 android:scrollbars="none">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <include layout="@layout/item_property_grid" />
-                    <include layout="@layout/item_property_grid" />
+
+                    <!-- Location 1 -->
+                    <LinearLayout
+                        android:id="@+id/locLahore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/social_button_bg"
+                        android:backgroundTint="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="6dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/location1" />
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="12dp"
+                            android:text="Lahore"
+                            android:textColor="#2D3A5F"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <!-- Location 2 -->
+                    <LinearLayout
+                        android:id="@+id/locKarachi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/social_button_bg"
+                        android:backgroundTint="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="6dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/location2" />
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="12dp"
+                            android:text="Karachi"
+                            android:textColor="#2D3A5F"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <!-- Location 3 -->
+                    <LinearLayout
+                        android:id="@+id/locFaisalabad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/social_button_bg"
+                        android:backgroundTint="@android:color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="6dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/location3" />
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="12dp"
+                            android:text="Faisalabad"
+                            android:textColor="#2D3A5F"
+                            android:textSize="14sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
+
+            <!-- Explore Nearby Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:paddingHorizontal="24dp"
+                android:text="@string/explore_nearby_estates"
+                android:textColor="#2D3A5F"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Using a GridLayout or simply a vertical LinearLayout with horizontal rows for now to match the "exactly like image" request if they are static, but better to keep dynamic -->
+            <LinearLayout
+                android:id="@+id/newListingsSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvNewListingsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="24dp"
+                    android:text="@string/featured_estates_near_you"
+                    android:textColor="#7B7B93"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:id="@+id/newListingsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="12dp" />
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -264,10 +560,7 @@
         android:layout_marginBottom="24dp"
         app:cardCornerRadius="35dp"
         app:cardElevation="15dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:id="@+id/bottomNav"
@@ -275,7 +568,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="10dp">
+            android:paddingHorizontal="24dp">
 
             <ImageView
                 android:id="@+id/nav_home"
@@ -283,7 +576,7 @@
                 android:layout_height="28dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_home_nav"
-                app:tint="#234F68" />
+                app:tint="#8BC34A" />
 
             <ImageView
                 android:id="@+id/nav_explore"
@@ -293,24 +586,22 @@
                 android:src="@drawable/ic_explore_nav"
                 app:tint="#7B7B93" />
 
-            <FrameLayout
-                android:id="@+id/nav_add"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.2">
-                <View
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/social_button_bg"
-                    android:backgroundTint="#234F68" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="8dp"
+                app:cardBackgroundColor="#8BC34A"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
+
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
+                    android:id="@+id/nav_add"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="12dp"
                     android:src="@drawable/ic_add_nav"
                     app:tint="@android:color/white" />
-            </FrameLayout>
+            </androidx.cardview.widget.CardView>
 
             <ImageView
                 android:id="@+id/nav_market"

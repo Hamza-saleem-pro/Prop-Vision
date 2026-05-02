@@ -79,6 +79,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".PropertyDetailsActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".SplashActivity"
             android:exported="false" />
     </application>

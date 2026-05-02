@@ -1,19 +1,17 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.gms.google.services)
+    // alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.googleServices)
 }
 
 android {
     namespace = "com.example.propvision"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.propvision"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -35,15 +33,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+
     buildFeatures {
         viewBinding = true
-    }
-}
-
-// Set JVM target for all Kotlin compilation tasks to 17
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = "17"
     }
 }
 
@@ -57,6 +49,7 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)

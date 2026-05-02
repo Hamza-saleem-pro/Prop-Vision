@@ -12,5 +12,9 @@ data class Property(
     val imageUris: List<String>,
     val address: String,
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val id: String? = null,
+    val ownerId: String? = null,
+    val avgRating: Double = 0.0,
+    val ratingCount: Int = 0
 ) : Serializable

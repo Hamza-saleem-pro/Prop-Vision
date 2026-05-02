@@ -12,6 +12,12 @@
         android:scaleType="centerCrop"
         android:src="@drawable/splash_bg" />
 
+    <!-- Blue Gradient Overlay -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_blue_overlay" />
+
     <!-- Logo -->
     <ImageView
         android:id="@+id/logo"
