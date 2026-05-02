@@ -205,57 +205,6 @@
             app:layout_constraintTop_toBottomOf="@id/forgot" />
 
         <TextView
-            android:id="@+id/orText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="OR"
-            android:textColor="#9A9AB0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/loginBtn" />
-
-        <LinearLayout
-            android:id="@+id/googleBtn"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/social_button_bg"
-            android:gravity="center"
-            app:layout_constraintEnd_toStartOf="@+id/facebookBtn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/orText">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/google_icon" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/facebookBtn"
-            android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/social_button_bg"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="@+id/googleBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/googleBtn"
-            app:layout_constraintTop_toTopOf="@+id/googleBtn">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/facebook_icon" />
-        </LinearLayout>
-
-        <TextView
             android:id="@+id/register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -267,7 +216,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/googleBtn"
+            app:layout_constraintTop_toBottomOf="@id/loginBtn"
             app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,11 +58,6 @@
     <string name="verify">Verify</string>
     <string name="resend_otp">Resend OTP</string>
 
-    <!-- Social Login -->
-    <string name="facebook_app_id">your_facebook_app_id_here</string>
-    <string name="fb_login_protocol_scheme">fb_your_facebook_app_id_here</string>
-    <string name="default_web_client_id">your_google_web_client_id_here</string>
-
     <!-- Home -->
     <string name="featured_banner_title">Featured\nEstates</string>
     <string name="featured_banner_subtitle">Handpicked homes with verified details near your preferred area.</string>
