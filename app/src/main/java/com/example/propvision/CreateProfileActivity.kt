@@ -10,10 +10,10 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -40,8 +40,8 @@ class CreateProfileActivity : AppCompatActivity() {
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
     private lateinit var etDOB: EditText
-    private lateinit var spinnerCountry: Spinner
-    private lateinit var spinnerCity: Spinner
+    private lateinit var spinnerCountry: AutoCompleteTextView
+    private lateinit var spinnerCity: AutoCompleteTextView
     private lateinit var etBio: EditText
     private lateinit var btnContinue: Button
     private lateinit var backBtn: View
@@ -110,22 +110,20 @@ class CreateProfileActivity : AppCompatActivity() {
         findViewById<View>(R.id.btnEditImage).setOnClickListener { showImagePickerDialog() }
         etDOB.setOnClickListener { showDatePicker() }
         btnContinue.setOnClickListener { if (validateAllFields()) registerUser() }
+        findViewById<View>(R.id.tvLoginLink).setOnClickListener { finish() }
     }
 
     private fun setupSpinners() {
         val countries = CountryCityData.getCountries()
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, countries)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerCountry.adapter = adapter
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, countries)
+        spinnerCountry.setAdapter(adapter)
 
-        spinnerCountry.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: android.widget.AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
-                val cities = CountryCityData.getCitiesByCountry(countries[pos])
-                val cityAdapter = ArrayAdapter(this@CreateProfileActivity, android.R.layout.simple_spinner_item, cities)
-                cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinnerCity.adapter = cityAdapter
-            }
-            override fun onNothingSelected(p0: android.widget.AdapterView<*>?) {}
+        spinnerCountry.setOnItemClickListener { _, _, pos, _ ->
+            val selectedCountry = countries[pos]
+            val cities = CountryCityData.getCitiesByCountry(selectedCountry)
+            val cityAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, cities)
+            spinnerCity.setAdapter(cityAdapter)
+            spinnerCity.setText("", false)
         }
     }
 
@@ -214,8 +212,8 @@ class CreateProfileActivity : AppCompatActivity() {
             "email" to etEmail.text.toString().trim(),
             "phone" to etPhone.text.toString().trim(),
             "dateOfBirth" to etDOB.text.toString().trim(),
-            "country" to spinnerCountry.selectedItem.toString(),
-            "city" to spinnerCity.selectedItem.toString(),
+            "country" to spinnerCountry.text.toString().trim(),
+            "city" to spinnerCity.text.toString().trim(),
             "bio" to etBio.text.toString().trim(),
             "profileImageUrl" to url,
             "createdAt" to System.currentTimeMillis()

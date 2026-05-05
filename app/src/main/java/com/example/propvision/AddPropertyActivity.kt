@@ -121,7 +121,7 @@ class AddPropertyActivity : AppCompatActivity() {
 
     private fun selectType(textView: TextView) {
         val types = listOf(typeHouse, typeApartment, typeVilla, typeFlat)
-        val selectedColor = ContextCompat.getColor(this, R.color.selected_bg)
+        val selectedColor = ContextCompat.getColor(this, R.color.primary)
         val unselectedColor = Color.WHITE
         val textColorUnselected = Color.parseColor("#2D3A5F")
         val textColorSelected = Color.WHITE

@@ -73,4 +73,16 @@
 
     <!-- Property Details -->
     <string name="open_property_location">View all on map</string>
+    <!-- Onboarding / Login -->
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login_subtitle">Please login to your account to continue</string>
+    <string name="email_hint">Email Address</string>
+    <string name="password_hint">Password</string>
+    <string name="or_text">OR</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="dont_have_account">Don\'t have an account? Register</string>
+    <string name="tagline">Find your dream home with ease and confidence.</string>
+
+    <!-- Google Sign In -->
+    <string name="default_web_client_id">PASTE_YOUR_WEB_CLIENT_ID_HERE</string>
 </resources>
