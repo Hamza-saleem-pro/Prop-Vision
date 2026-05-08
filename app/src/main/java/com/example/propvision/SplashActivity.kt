@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import android.widget.TextView
 import android.text.method.HideReturnsTransformationMethod
@@ -28,6 +29,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FieldValue
 import com.google.android.material.textfield.TextInputLayout
 
 class SplashActivity : AppCompatActivity() {
@@ -38,6 +41,7 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var cbRememberMe: CheckBox
     private lateinit var emailLayout: TextInputLayout
     private lateinit var passwordLayout: TextInputLayout
+    private lateinit var loginProgressBar: ProgressBar
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private val googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -85,6 +89,7 @@ class SplashActivity : AppCompatActivity() {
         cbRememberMe = findViewById(R.id.cbRememberMe)
         emailLayout = findViewById(R.id.emailLayout)
         passwordLayout = findViewById(R.id.passwordLayout)
+        loginProgressBar = findViewById(R.id.loginProgressBar)
         val loginBtn = findViewById<Button>(R.id.loginBtn)
 
         loadSavedCredentials()
@@ -217,28 +222,85 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun attemptLogin(email: String, password: String) {
+        loginProgressBar.visibility = View.VISIBLE
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    saveCredentials(email, password)
-                    Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    val user = auth.currentUser
+                    if (user != null) {
+                        val otpCode = (100000..999999).random().toString()
+                        
+                        val db = FirebaseFirestore.getInstance()
+                        val batch = db.batch()
+                        
+                        // 1. Save OTP for secure server-side verification
+                        val otpData = mapOf(
+                            "code" to otpCode,
+                            "timestamp" to FieldValue.serverTimestamp(),
+                            "email" to email,
+                            "expiryTime" to System.currentTimeMillis() + 300000 // 5 minutes
+                        )
+                        val otpRef = db.collection("otps").document(user.uid)
+                        batch.set(otpRef, otpData)
+                        
+                        // 2. Prepare Email for Trigger Email Extension
+                        val emailData = mapOf(
+                            "to" to listOf(email),
+                            "message" to mapOf(
+                                "subject" to "PropertyVision Verification Code",
+                                "html" to """
+                                    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 30px; color: #333; background-color: #f9f9f9; border-radius: 10px; max-width: 600px; margin: auto; border: 1px solid #eee;">
+                                        <div style="text-align: center; margin-bottom: 20px;">
+                                            <h1 style="color: #234F68; margin: 0;">PropertyVision Pakistan</h1>
+                                            <p style="color: #666; font-size: 14px;">Secure Property Management</p>
+                                        </div>
+                                        <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+                                        <p style="font-size: 16px;">Hello,</p>
+                                        <p style="font-size: 16px;">Your 6-digit verification code for PropertyVision is:</p>
+                                        <div style="background-color: #ffffff; padding: 20px; text-align: center; border-radius: 8px; border: 2px dashed #234F68; margin: 25px 0;">
+                                            <h1 style="color: #234F68; font-size: 40px; letter-spacing: 8px; margin: 0; font-family: monospace;">$otpCode</h1>
+                                        </div>
+                                        <p style="color: #d32f2f; font-weight: bold; font-size: 14px;">This code will expire in 5 minutes.</p>
+                                        <p style="color: #666; font-size: 12px; margin-top: 20px;">For your security, do not share this OTP with anyone. If you didn't request this code, please ignore this email.</p>
+                                        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; font-size: 12px; color: #999;">
+                                            &copy; 2025 PropertyVision Pakistan. All rights reserved.
+                                        </div>
+                                    </div>
+                                """.trimIndent()
+                            )
+                        )
+                        val mailRef = db.collection("mail").document()
+                        batch.set(mailRef, emailData)
+                        
+                        batch.commit().addOnCompleteListener { batchTask ->
+                            loginProgressBar.visibility = View.GONE
+                            if (batchTask.isSuccessful) {
+                                saveCredentials(email, password)
+                                val intent = Intent(this, OtpVerificationActivity::class.java)
+                                intent.putExtra("email", email)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(this, "Failed to send OTP: ${batchTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
                 } else {
+                    loginProgressBar.visibility = View.GONE
                     handleLoginError(task.exception, email)
                 }
             }
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
+        loginProgressBar.visibility = View.VISIBLE
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
+                loginProgressBar.visibility = View.GONE
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Google Login Successful", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
+                    // Google users are usually verified by default
+                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, HomeActivity::class.java))
                     finish()
                 } else {
                     Toast.makeText(this, "Authentication Failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
