@@ -191,7 +191,7 @@ class CreateProfileActivity : AppCompatActivity() {
     }
 
     private fun uploadProfileImage(uid: String) {
-        val ref = storage.reference.child("profile_images/$uid/profile.jpg")
+        val ref = storage.reference.child(ProfileImageStoragePaths.profileImagePath(uid))
         selectedImageUri?.let { uri ->
             ref.putFile(uri).continueWithTask { task ->
                 if (!task.isSuccessful) task.exception?.let { throw it }
