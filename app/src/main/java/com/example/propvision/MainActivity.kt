@@ -1,8 +1,10 @@
 package com.example.propvision
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -14,12 +16,23 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Show the beautiful splash screen (activity_main) first.
-        // The user clicks "let's start" to move to the login (SplashActivity).
-        findViewById<Button>(R.id.startBtn).setOnClickListener {
-            val intent = Intent(this, SplashActivity::class.java)
-            startActivity(intent)
-            // finish() // We can finish this so they don't come back to the splash after starting
-        }
+        // Session check logic
+        val sharedPreferences = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+
+        // Small delay for Splash effect
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (isLoggedIn) {
+                // Directly navigate to HomeActivity
+                val intent = Intent(this, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else {
+                // Navigate to Login Screen (SplashActivity)
+                val intent = Intent(this, SplashActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+        }, 2000) // 2 seconds delay
     }
 }

@@ -1,5 +1,6 @@
 package com.example.propvision
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -81,6 +82,11 @@ class UserProfileActivity : AppCompatActivity() {
             .setMessage("Are you sure you want to logout?")
             .setPositiveButton("Yes") { _, _ ->
                 auth.signOut()
+                
+                // Clear login session
+                val sharedPreferences = getSharedPreferences("UserSession", Context.MODE_PRIVATE)
+                sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
+
                 val intent = Intent(this, SplashActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
