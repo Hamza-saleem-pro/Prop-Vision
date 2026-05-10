@@ -193,6 +193,34 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Description"
+                    android:textColor="#2D3A5F"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/input_background"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="10dp">
+                    <EditText
+                        android:id="@+id/descriptionInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="Tell us more about your property..."
+                        android:textColor="#2D3A5F"
+                        android:textColorHint="#7B7B93"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:gravity="top" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="Property Features"
                     android:textColor="#2D3A5F"

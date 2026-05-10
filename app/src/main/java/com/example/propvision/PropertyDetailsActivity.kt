@@ -56,6 +56,10 @@ class PropertyDetailsActivity : AppCompatActivity() {
         val rbAverageRating = findViewById<RatingBar>(R.id.rbAverageRating)
         val tvRatingCount = findViewById<TextView>(R.id.tvRatingCount)
         val btnRate = findViewById<TextView>(R.id.btnRate)
+        val tvDetailDescription = findViewById<TextView>(R.id.tvDetailDescription)
+        val tvOwnerEmail = findViewById<TextView>(R.id.tvOwnerEmail)
+        val tvOwnerPhone = findViewById<TextView>(R.id.tvOwnerPhone)
+        val tvOwnerNameDetail = findViewById<TextView>(R.id.tvOwnerNameDetail)
 
         tvDetailName.text = property.propertyType 
         tvDetailLocation.text = property.address
@@ -63,10 +67,14 @@ class PropertyDetailsActivity : AppCompatActivity() {
         tvTypeTag.text = property.propertyType
         tvDetailBed.text = "${property.bedroomCount} Bedroom"
         tvDetailBath.text = "${property.bathroomCount} Bathroom"
+        tvDetailDescription.text = property.description ?: "No description available."
+        tvOwnerEmail.text = property.ownerEmail ?: "N/A"
+        tvOwnerPhone.text = property.ownerPhone ?: "N/A"
+        tvOwnerNameDetail.text = property.ownerName ?: "Property Owner"
 
         val priceText = when {
-            property.rentPrice != null -> "$ ${property.rentPrice}"
-            property.sellPrice != null -> "$ ${property.sellPrice}"
+            property.rentPrice != null -> "Rs. ${property.rentPrice}"
+            property.sellPrice != null -> "Rs. ${property.sellPrice}"
             else -> "N/A"
         }
         tvDetailPrice.text = priceText

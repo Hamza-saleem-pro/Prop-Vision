@@ -322,6 +322,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvOwnerNameDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Anderson"
@@ -481,6 +482,100 @@
             </androidx.cardview.widget.CardView>
 
             <!-- Cost of Living removed as requested -->
+
+            <!-- Description Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:paddingHorizontal="24dp"
+                android:text="Description"
+                android:textColor="#2D3A5F"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDetailDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:paddingHorizontal="24dp"
+                android:text="No description available."
+                android:textColor="#7B7B93"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- Owner Contact Info -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:paddingHorizontal="24dp"
+                android:text="Contact Owner"
+                android:textColor="#2D3A5F"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/email"
+                            app:tint="#234F68" />
+
+                        <TextView
+                            android:id="@+id/tvOwnerEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="owner@example.com"
+                            android:textColor="#2D3A5F"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@android:drawable/stat_sys_phone_call"
+                            app:tint="#234F68" />
+
+                        <TextView
+                            android:id="@+id/tvOwnerPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="+92 300 1234567"
+                            android:textColor="#2D3A5F"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <!-- Nearby From this Location -->
             <TextView

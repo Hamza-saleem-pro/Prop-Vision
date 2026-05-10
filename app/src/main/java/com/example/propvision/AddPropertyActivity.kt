@@ -184,6 +184,162 @@ class AddPropertyActivity : AppCompatActivity() {
         updatePhotoUI()
     }
 
+    private fun validateAndFinish() {
+        val sellPrice = findViewById<EditText>(R.id.sellPriceInput).text.toString().trim()
+        val rentPrice = findViewById<EditText>(R.id.rentPriceInput).text.toString().trim()
+        val description = findViewById<EditText>(R.id.descriptionInput).text.toString().trim()
+
+        if (selectedImages.isEmpty()) {
+            Toast.makeText(this, "Please add at least one photo", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (sellPrice.isEmpty() && rentPrice.isEmpty()) {
+            Toast.makeText(this, "Please enter at least one price (Sell or Rent)", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (selectedAddress == null) {
+            Toast.makeText(this, "Please select a location", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (description.isEmpty()) {
+            Toast.makeText(this, "Please enter a description", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Proceed to upload images (if any new) and save property to Firestore
+        uploadImagesAndSaveProperty(sellPrice, rentPrice, description)
+    }
+
+    private fun uploadImagesAndSaveProperty(sellPrice: String, rentPrice: String, description: String) {
+        val userId = auth.currentUser?.uid ?: "anonymous"
+        val uploadTasks = mutableListOf<com.google.android.gms.tasks.Task<Uri>>()
+        val finalImageUrls = mutableListOf<String>()
+        
+        findViewById<Button>(R.id.finishBtn).isEnabled = false
+        findViewById<Button>(R.id.finishBtn).text = "Uploading..."
+
+        // For each selectedImages Uri: if it's an http(s) URL, keep it; otherwise upload to Firebase Storage
+        if (selectedImages.isEmpty() && existingImageUrls.isNotEmpty()) {
+            // user didn't change images during edit - preserve existing URLs
+            finalImageUrls.addAll(existingImageUrls)
+        } else {
+            selectedImages.forEachIndexed { index, uri ->
+                val s = uri.toString()
+                if (s.startsWith("http://") || s.startsWith("https://")) {
+                    finalImageUrls.add(s)
+                } else {
+                    // Upload local/content URI
+                    val refPath = "properties/$userId/${System.currentTimeMillis()}_$index.jpg"
+                    val storageRef: StorageReference = storage.reference.child(refPath)
+                    val uploadTask = storageRef.putFile(uri).continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            task.exception?.let { throw it }
+                        }
+                        storageRef.downloadUrl
+                    }
+                    uploadTasks.add(uploadTask)
+                    uploadTask.addOnSuccessListener { dl ->
+                        finalImageUrls.add(dl.toString())
+                    }
+                }
+            }
+        }
+
+        // When all uploadTasks complete, save property
+        if (uploadTasks.isEmpty()) {
+            // No uploads, save directly
+            fetchUserAndSaveProperty(userId, sellPrice, rentPrice, description, finalImageUrls)
+        } else {
+            com.google.android.gms.tasks.Tasks.whenAllComplete(uploadTasks)
+                .addOnSuccessListener {
+                    fetchUserAndSaveProperty(userId, sellPrice, rentPrice, description, finalImageUrls)
+                }
+                .addOnFailureListener { e ->
+                    findViewById<Button>(R.id.finishBtn).isEnabled = true
+                    findViewById<Button>(R.id.finishBtn).text = "Finish"
+                    Toast.makeText(this, "Failed to upload images: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+        }
+    }
+
+    private fun fetchUserAndSaveProperty(userId: String, sellPrice: String, rentPrice: String, description: String, imageUrls: List<String>) {
+        db.collection("users").document(userId).get()
+            .addOnSuccessListener { userDoc ->
+                val ownerName = userDoc.getString("fullName") ?: "Owner"
+                val ownerEmail = userDoc.getString("email") ?: ""
+                val ownerPhone = userDoc.getString("phone") ?: ""
+                
+                savePropertyToFirestore(userId, ownerName, ownerEmail, ownerPhone, sellPrice, rentPrice, description, imageUrls)
+            }
+            .addOnFailureListener {
+                // Fallback if user details fetch fails
+                savePropertyToFirestore(userId, "Owner", "", "", sellPrice, rentPrice, description, imageUrls)
+            }
+    }
+
+    private fun savePropertyToFirestore(
+        userId: String, 
+        ownerName: String, 
+        ownerEmail: String, 
+        ownerPhone: String,
+        sellPrice: String, 
+        rentPrice: String, 
+        description: String,
+        imageUrls: List<String>
+    ) {
+        val data = hashMapOf<String, Any?>(
+            "propertyType" to selectedType,
+            "sellPrice" to if (sellPrice.isNotEmpty()) sellPrice else null,
+            "rentPrice" to if (rentPrice.isNotEmpty()) rentPrice else null,
+            "description" to description,
+            "bedroomCount" to bedroomCount,
+            "bathroomCount" to bathroomCount,
+            "kitchenCount" to kitchenCount,
+            "imageUris" to imageUrls,
+            "address" to selectedAddress,
+            "latitude" to selectedLat,
+            "longitude" to selectedLng,
+            "ownerId" to userId,
+            "ownerName" to ownerName,
+            "ownerEmail" to ownerEmail,
+            "ownerPhone" to ownerPhone,
+            "timestamp" to System.currentTimeMillis(),
+            "createdAt" to com.google.firebase.Timestamp.now()
+        )
+
+        if (isEditing && !editingPropertyId.isNullOrEmpty()) {
+            db.collection("properties").document(editingPropertyId!!)
+                .set(data)
+                .addOnSuccessListener {
+                    NotificationRepository.addNotification(Notification("Listing Updated", "Your listing has been updated", SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())))
+                    Toast.makeText(this, "Property updated successfully!", Toast.LENGTH_LONG).show()
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("UPDATED_PROPERTY_ID", editingPropertyId)
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to update property: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+        } else {
+            db.collection("properties").add(data)
+                .addOnSuccessListener { docRef ->
+                    NotificationRepository.addNotification(Notification("Listing Live", "Your $selectedType in $selectedAddress is now listed and visible to buyers!", SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())))
+                    Toast.makeText(this, "Property listed successfully!", Toast.LENGTH_LONG).show()
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("NEW_PROPERTY_ID", docRef.id)
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to save property: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+        }
+    }
+
     private fun loadPropertyForEdit(propertyId: String) {
         db.collection("properties").document(propertyId).get()
             .addOnSuccessListener { doc ->
@@ -199,6 +355,7 @@ class AddPropertyActivity : AppCompatActivity() {
 
                     findViewById<EditText>(R.id.sellPriceInput).setText(doc.getString("sellPrice"))
                     findViewById<EditText>(R.id.rentPriceInput).setText(doc.getString("rentPrice"))
+                    findViewById<EditText>(R.id.descriptionInput).setText(doc.getString("description"))
                     val b = (doc.getLong("bedroomCount") ?: 1L).toInt()
                     val ba = (doc.getLong("bathroomCount") ?: 1L).toInt()
                     val k = (doc.getLong("kitchenCount") ?: 1L).toInt()
@@ -352,123 +509,6 @@ class AddPropertyActivity : AppCompatActivity() {
             txtSelectedLocation.text = "No location selected"
             txtSelectedLocation.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray))
             btnRemoveLocation.visibility = View.GONE
-        }
-    }
-
-    private fun validateAndFinish() {
-        val sellPrice = findViewById<EditText>(R.id.sellPriceInput).text.toString().trim()
-        val rentPrice = findViewById<EditText>(R.id.rentPriceInput).text.toString().trim()
-
-        if (selectedImages.isEmpty()) {
-            Toast.makeText(this, "Please add at least one photo", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (sellPrice.isEmpty() && rentPrice.isEmpty()) {
-            Toast.makeText(this, "Please enter at least one price (Sell or Rent)", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (selectedAddress == null) {
-            Toast.makeText(this, "Please select a location", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-
-        // Proceed to upload images (if any new) and save property to Firestore
-        uploadImagesAndSaveProperty(sellPrice, rentPrice)
-    }
-
-    private fun uploadImagesAndSaveProperty(sellPrice: String, rentPrice: String) {
-        val userId = auth.currentUser?.uid ?: "anonymous"
-        val uploadTasks = mutableListOf<com.google.android.gms.tasks.Task<Uri>>()
-        val finalImageUrls = mutableListOf<String>()
-
-        // For each selectedImages Uri: if it's an http(s) URL, keep it; otherwise upload to Firebase Storage
-        if (selectedImages.isEmpty() && existingImageUrls.isNotEmpty()) {
-            // user didn't change images during edit - preserve existing URLs
-            finalImageUrls.addAll(existingImageUrls)
-        } else {
-            selectedImages.forEachIndexed { index, uri ->
-            val s = uri.toString()
-            if (s.startsWith("http://") || s.startsWith("https://")) {
-                finalImageUrls.add(s)
-            } else {
-                // Upload local/content URI
-                val refPath = "properties/$userId/${System.currentTimeMillis()}_$index.jpg"
-                val storageRef: StorageReference = storage.reference.child(refPath)
-                val uploadTask = storageRef.putFile(uri).continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let { throw it }
-                    }
-                    storageRef.downloadUrl
-                }
-                uploadTasks.add(uploadTask)
-                uploadTask.addOnSuccessListener { dl ->
-                    finalImageUrls.add(dl.toString())
-                }
-            }
-            }
-        }
-
-        // When all uploadTasks complete, save property
-        if (uploadTasks.isEmpty()) {
-            // No uploads, save directly
-            savePropertyToFirestore(userId, sellPrice, rentPrice, finalImageUrls)
-        } else {
-            com.google.android.gms.tasks.Tasks.whenAllComplete(uploadTasks)
-                .addOnSuccessListener {
-                    savePropertyToFirestore(userId, sellPrice, rentPrice, finalImageUrls)
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to upload images: ${e.message}", Toast.LENGTH_LONG).show()
-                }
-        }
-    }
-
-    private fun savePropertyToFirestore(userId: String, sellPrice: String, rentPrice: String, imageUrls: List<String>) {
-        val data = hashMapOf<String, Any?>(
-            "propertyType" to selectedType,
-            "sellPrice" to if (sellPrice.isNotEmpty()) sellPrice else null,
-            "rentPrice" to if (rentPrice.isNotEmpty()) rentPrice else null,
-            "bedroomCount" to bedroomCount,
-            "bathroomCount" to bathroomCount,
-            "kitchenCount" to kitchenCount,
-            "imageUris" to imageUrls,
-            "address" to selectedAddress,
-            "latitude" to selectedLat,
-            "longitude" to selectedLng,
-            "ownerId" to userId,
-            "createdAt" to com.google.firebase.Timestamp.now()
-        )
-
-        if (isEditing && !editingPropertyId.isNullOrEmpty()) {
-            db.collection("properties").document(editingPropertyId!!)
-                .set(data)
-                .addOnSuccessListener {
-                    NotificationRepository.addNotification(Notification("Listing Updated", "Your listing has been updated", SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())))
-                    Toast.makeText(this, "Property updated successfully!", Toast.LENGTH_LONG).show()
-                    val resultIntent = Intent()
-                    resultIntent.putExtra("UPDATED_PROPERTY_ID", editingPropertyId)
-                    setResult(Activity.RESULT_OK, resultIntent)
-                    finish()
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to update property: ${e.message}", Toast.LENGTH_LONG).show()
-                }
-        } else {
-            db.collection("properties").add(data)
-                .addOnSuccessListener { docRef ->
-                    NotificationRepository.addNotification(Notification("Listing Live", "Your $selectedType in $selectedAddress is now listed and visible to buyers!", SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())))
-                    Toast.makeText(this, "Property listed successfully!", Toast.LENGTH_LONG).show()
-                    val resultIntent = Intent()
-                    resultIntent.putExtra("NEW_PROPERTY_ID", docRef.id)
-                    setResult(Activity.RESULT_OK, resultIntent)
-                    finish()
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to save property: ${e.message}", Toast.LENGTH_LONG).show()
-                }
         }
     }
 }

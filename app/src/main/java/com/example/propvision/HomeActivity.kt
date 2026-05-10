@@ -173,8 +173,13 @@ class HomeActivity : AppCompatActivity() {
                             longitude = doc.getDouble("longitude") ?: 0.0,
                             id = doc.id,
                             ownerId = doc.getString("ownerId"),
+                            ownerName = doc.getString("ownerName"),
+                            ownerEmail = doc.getString("ownerEmail"),
+                            ownerPhone = doc.getString("ownerPhone"),
+                            description = doc.getString("description"),
                             avgRating = doc.getDouble("avgRating") ?: 0.0,
-                            ratingCount = (doc.getLong("ratingCount") ?: 0L).toInt()
+                            ratingCount = (doc.getLong("ratingCount") ?: 0L).toInt(),
+                            timestamp = doc.getLong("timestamp")
                         )
                         propertyList.add(prop)
                     } catch (e: Exception) {
@@ -448,17 +453,37 @@ class HomeActivity : AppCompatActivity() {
             val tvName = itemView.findViewById<TextView>(R.id.propertyName)
             val tvLocation = itemView.findViewById<TextView>(R.id.propertyLocation)
             val tvPrice = itemView.findViewById<TextView>(R.id.propertyPrice)
+            val tvOwnerName = itemView.findViewById<TextView>(R.id.ownerName)
+            val tvOwnerPhone = itemView.findViewById<TextView>(R.id.ownerPhone)
+            val tvOwnerEmail = itemView.findViewById<TextView>(R.id.ownerEmail)
+            val btnEdit = itemView.findViewById<ImageView>(R.id.btnEditProperty)
 
             if (property.imageUris.isNotEmpty()) {
-                ivImage.load(Uri.parse(property.imageUris[0]))
+                ivImage.load(property.imageUris[0])
             }
 
             tvName.text = property.propertyType.replaceFirstChar { it.uppercase() }
             tvLocation.text = property.address
+            tvOwnerName.text = property.ownerName ?: "Owner"
+            tvOwnerPhone.text = property.ownerPhone ?: ""
+            tvOwnerEmail.text = property.ownerEmail ?: ""
             
+            // Ownership-based update logic
+            val currentUserId = auth.currentUser?.uid
+            if (currentUserId != null && currentUserId == property.ownerId) {
+                btnEdit.visibility = View.VISIBLE
+                btnEdit.setOnClickListener {
+                    val intent = Intent(this, AddPropertyActivity::class.java)
+                    intent.putExtra("EDIT_PROPERTY_ID", property.id)
+                    addPropertyLauncher.launch(intent)
+                }
+            } else {
+                btnEdit.visibility = View.GONE
+            }
+
             val priceText = when {
-                property.rentPrice != null -> "$${property.rentPrice}/month"
-                property.sellPrice != null -> "$${property.sellPrice}"
+                property.rentPrice != null -> "Rs.${property.rentPrice}/month"
+                property.sellPrice != null -> "Rs.${property.sellPrice}"
                 else -> "N/A"
             }
             tvPrice.text = priceText

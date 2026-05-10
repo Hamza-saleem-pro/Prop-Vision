@@ -15,6 +15,11 @@ data class Property(
     val longitude: Double,
     val id: String? = null,
     val ownerId: String? = null,
+    val ownerName: String? = null,
+    val ownerEmail: String? = null,
+    val ownerPhone: String? = null,
+    val description: String? = null,
     val avgRating: Double = 0.0,
-    val ratingCount: Int = 0
+    val ratingCount: Int = 0,
+    val timestamp: Long? = null
 ) : Serializable
