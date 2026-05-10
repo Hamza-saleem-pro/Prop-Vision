@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:background="#E0E0E0" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filter"
+                android:textColor="#2D3A5F"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:padding="4dp"
+                android:text="Reset"
+                android:textColor="#FF5252"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <!-- Category -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textColor="#2D3A5F"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:scrollbars="none">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipHouse"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="House" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipApartment"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Apartment" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipVilla"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Villa" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipFlat"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Flat" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipOffice"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Office" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipShop"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shop" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <!-- Price Range -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Price Range (Rs.)"
+            android:textColor="#2D3A5F"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etMinPrice"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/social_button_bg"
+                android:hint="Min Price"
+                android:inputType="number"
+                android:paddingHorizontal="16dp"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/etMaxPrice"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/social_button_bg"
+                android:hint="Max Price"
+                android:inputType="number"
+                android:paddingHorizontal="16dp"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Location -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Location"
+            android:textColor="#2D3A5F"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etLocationFilter"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/social_button_bg"
+            android:hint="Enter City or Area"
+            android:inputType="text"
+            android:paddingHorizontal="16dp"
+            android:textSize="14sp" />
+
+        <!-- Rent/Sale -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Listing Type"
+            android:textColor="#2D3A5F"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupListingType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRent"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For Rent" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSale"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For Sale" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBoth"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For Rent &amp; Sale" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Bedrooms -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Bedrooms"
+            android:textColor="#2D3A5F"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupBedrooms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBed1"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBed2"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBed3"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBed4"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4+" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApplyFilter"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:text="Apply Filters"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

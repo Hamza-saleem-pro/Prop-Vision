@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import coil.load
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import androidx.core.net.toUri
 
 class ExplorePropertiesActivity : AppCompatActivity() {
@@ -30,6 +33,19 @@ class ExplorePropertiesActivity : AppCompatActivity() {
     private val propertyList = mutableListOf<Property>()
     private var showingGrid = false
     private var currentQuery = ""
+    private var selectedCategory = "All"
+    
+    private var filterType: String? = null
+    private var filterMinPrice: Long? = null
+    private var filterMaxPrice: Long? = null
+    private var filterLocation: String? = null
+    private var filterListingType: String? = null
+    private var filterBedrooms: Int? = null
+
+    private lateinit var chipHouse: TextView
+    private lateinit var chipApartment: TextView
+    private lateinit var chipVilla: TextView
+    private lateinit var chipFlat: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +59,20 @@ class ExplorePropertiesActivity : AppCompatActivity() {
         tvResultsSummary = findViewById(R.id.tvResultsSummary)
         gridViewBtn = findViewById(R.id.gridViewBtn)
         listViewBtn = findViewById(R.id.listViewBtn)
+        
+        chipHouse = findViewById(R.id.chipHouse)
+        chipApartment = findViewById(R.id.chipApartment)
+        chipVilla = findViewById(R.id.chipVilla)
+        chipFlat = findViewById(R.id.chipFlat)
 
         setupNavigation()
         setupSearch()
         setupViewToggles()
+        setupCategoryChips()
 
         findViewById<View>(R.id.backBtn).setOnClickListener { finish() }
         findViewById<View>(R.id.filterBtn).setOnClickListener {
-            Toast.makeText(this, "Filter options coming soon", Toast.LENGTH_SHORT).show()
+            showFilterBottomSheet()
         }
         findViewById<View>(R.id.btnSearch).setOnClickListener {
             currentQuery = etSearchInput.text.toString()
@@ -123,8 +145,161 @@ class ExplorePropertiesActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupCategoryChips() {
+        val chips = mapOf(
+            "House" to chipHouse,
+            "Apartment" to chipApartment,
+            "Villa" to chipVilla,
+            "Flat" to chipFlat
+        )
+
+        chips.forEach { (category, view) ->
+            view.setOnClickListener {
+                selectedCategory = if (selectedCategory == category) "All" else category
+                updateChipsUI()
+                renderProperties()
+            }
+        }
+    }
+
+    private fun updateChipsUI() {
+        val chips = mapOf(
+            "House" to chipHouse,
+            "Apartment" to chipApartment,
+            "Villa" to chipVilla,
+            "Flat" to chipFlat
+        )
+
+        chips.forEach { (category, view) ->
+            if (category == selectedCategory) {
+                view.setBackgroundResource(R.drawable.social_button_bg)
+                view.backgroundTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#234F68"))
+                view.setTextColor(android.graphics.Color.WHITE)
+            } else {
+                view.setBackgroundResource(R.drawable.social_button_bg)
+                view.backgroundTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.WHITE)
+                view.setTextColor(android.graphics.Color.parseColor("#2D3A5F"))
+            }
+        }
+    }
+
+    private fun showFilterBottomSheet() {
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_filter, null)
+        dialog.setContentView(view)
+
+        val chipGroupType = view.findViewById<ChipGroup>(R.id.chipGroupType)
+        val etMinPrice = view.findViewById<EditText>(R.id.etMinPrice)
+        val etMaxPrice = view.findViewById<EditText>(R.id.etMaxPrice)
+        val etLocationFilter = view.findViewById<EditText>(R.id.etLocationFilter)
+        val chipGroupListingType = view.findViewById<ChipGroup>(R.id.chipGroupListingType)
+        val chipGroupBedrooms = view.findViewById<ChipGroup>(R.id.chipGroupBedrooms)
+        val btnApply = view.findViewById<View>(R.id.btnApplyFilter)
+        val btnReset = view.findViewById<View>(R.id.btnReset)
+
+        // Pre-fill existing filters if any
+        filterMinPrice?.let { etMinPrice.setText(it.toString()) }
+        filterMaxPrice?.let { etMaxPrice.setText(it.toString()) }
+        filterLocation?.let { etLocationFilter.setText(it) }
+        
+        // Select chips based on current filter state
+        filterType?.let { type ->
+            for (i in 0 until chipGroupType.childCount) {
+                val chip = chipGroupType.getChildAt(i) as Chip
+                if (chip.text.toString().equals(type, ignoreCase = true)) {
+                    chip.isChecked = true
+                    break
+                }
+            }
+        }
+
+        filterListingType?.let { listingType ->
+            for (i in 0 until chipGroupListingType.childCount) {
+                val chip = chipGroupListingType.getChildAt(i) as Chip
+                if (chip.text.toString().equals(listingType, ignoreCase = true)) {
+                    chip.isChecked = true
+                    break
+                }
+            }
+        }
+
+        filterBedrooms?.let { beds ->
+            val bedText = if (beds == 4) "4+" else beds.toString()
+            for (i in 0 until chipGroupBedrooms.childCount) {
+                val chip = chipGroupBedrooms.getChildAt(i) as Chip
+                if (chip.text.toString() == bedText) {
+                    chip.isChecked = true
+                    break
+                }
+            }
+        }
+
+        btnReset.setOnClickListener {
+            filterType = null
+            filterMinPrice = null
+            filterMaxPrice = null
+            filterLocation = null
+            filterListingType = null
+            filterBedrooms = null
+            dialog.dismiss()
+            renderProperties()
+        }
+
+        btnApply.setOnClickListener {
+            val selectedTypeId = chipGroupType.checkedChipId
+            filterType = if (selectedTypeId != View.NO_ID) {
+                view.findViewById<Chip>(selectedTypeId).text.toString()
+            } else null
+
+            filterMinPrice = etMinPrice.text.toString().toLongOrNull()
+            filterMaxPrice = etMaxPrice.text.toString().toLongOrNull()
+            filterLocation = etLocationFilter.text.toString().takeIf { it.isNotBlank() }
+
+            val selectedListingTypeId = chipGroupListingType.checkedChipId
+            filterListingType = if (selectedListingTypeId != View.NO_ID) {
+                view.findViewById<Chip>(selectedListingTypeId).text.toString()
+            } else null
+
+            val selectedBedroomId = chipGroupBedrooms.checkedChipId
+            filterBedrooms = if (selectedBedroomId != View.NO_ID) {
+                val text = view.findViewById<Chip>(selectedBedroomId).text.toString()
+                if (text == "4+") 4 else text.toIntOrNull()
+            } else null
+
+            dialog.dismiss()
+            renderProperties()
+        }
+
+        dialog.show()
+    }
+
     private fun renderProperties() {
-        val filteredList = propertyList.filter { PropertySearchUtils.matchesQuery(it, currentQuery) }
+        val filteredList = propertyList.filter { 
+            val matchesSearch = PropertySearchUtils.matchesQuery(it, currentQuery)
+            val matchesCategory = if (selectedCategory == "All") true else it.propertyType.equals(selectedCategory, ignoreCase = true)
+            
+            // Advanced Filters
+            val matchesType = if (filterType == null) true else it.propertyType.equals(filterType, ignoreCase = true)
+            
+            val price = it.rentPrice?.replace(",", "")?.toLongOrNull() ?: it.sellPrice?.replace(",", "")?.toLongOrNull() ?: 0L
+            val matchesMinPrice = if (filterMinPrice == null) true else price >= filterMinPrice!!
+            val matchesMaxPrice = if (filterMaxPrice == null) true else price <= filterMaxPrice!!
+            
+            val matchesLocation = if (filterLocation == null) true else it.address.contains(filterLocation!!, ignoreCase = true)
+            
+            val matchesListingType = when (filterListingType) {
+                "For Rent" -> it.rentPrice != null
+                "For Sale" -> it.sellPrice != null
+                "For Rent & Sale" -> it.rentPrice != null && it.sellPrice != null
+                else -> true
+            }
+            
+            val matchesBedrooms = if (filterBedrooms == null) true else {
+                if (filterBedrooms == 4) it.bedroomCount >= 4 else it.bedroomCount == filterBedrooms
+            }
+
+            matchesSearch && matchesCategory && matchesType && matchesMinPrice && matchesMaxPrice && matchesLocation && matchesListingType && matchesBedrooms
+        }
         tvResultsSummary.text = getString(R.string.explore_search_summary_format, filteredList.size)
 
         listViewLayout.removeAllViews()

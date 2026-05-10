@@ -158,20 +158,21 @@
                     android:paddingVertical="10dp">
 
                     <TextView
+                        android:id="@+id/chipHouse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/social_button_bg"
-                        android:backgroundTint="#234F68"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="8dp"
                         android:text="House"
-                        android:textColor="@android:color/white" />
+                        android:textColor="#2D3A5F" />
 
                     <View
                         android:layout_width="8dp"
                         android:layout_height="1dp" />
 
                     <TextView
+                        android:id="@+id/chipApartment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/social_button_bg"
@@ -185,6 +186,7 @@
                         android:layout_height="1dp" />
 
                     <TextView
+                        android:id="@+id/chipVilla"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/social_button_bg"
@@ -198,6 +200,7 @@
                         android:layout_height="1dp" />
 
                     <TextView
+                        android:id="@+id/chipFlat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/social_button_bg"
