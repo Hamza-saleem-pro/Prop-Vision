@@ -28,14 +28,31 @@
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/propertyName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Modern Villa"
-                android:textColor="#2D3A5F"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/propertyName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Modern Villa"
+                    android:textColor="#2D3A5F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/propertyStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/social_button_bg"
+                    android:backgroundTint="#E1F5FE"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:text="For Rent"
+                    android:textColor="#03A9F4"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
             <TextView
                 android:id="@+id/propertyLocation"
                 android:layout_width="wrap_content"

@@ -163,6 +163,7 @@ class ExplorePropertiesActivity : AppCompatActivity() {
         val tvOwnerName = itemView.findViewById<TextView>(R.id.ownerName)
         val tvOwnerPhone = itemView.findViewById<TextView>(R.id.ownerPhone)
         val tvOwnerEmail = itemView.findViewById<TextView>(R.id.ownerEmail)
+        val tvStatus = itemView.findViewById<TextView>(R.id.propertyStatus)
         val btnEdit = itemView.findViewById<ImageView>(R.id.btnEditProperty)
 
         if (property.imageUris.isNotEmpty()) {
@@ -173,6 +174,22 @@ class ExplorePropertiesActivity : AppCompatActivity() {
         tvOwnerName?.text = property.ownerName ?: "Owner"
         tvOwnerPhone?.text = property.ownerPhone ?: ""
         tvOwnerEmail?.text = property.ownerEmail ?: ""
+
+        // Dynamic Status Label Logic
+        when {
+            !property.rentPrice.isNullOrEmpty() && !property.sellPrice.isNullOrEmpty() -> {
+                tvStatus?.text = "For Rent & Sale"
+            }
+            !property.sellPrice.isNullOrEmpty() -> {
+                tvStatus?.text = "For Sale"
+            }
+            !property.rentPrice.isNullOrEmpty() -> {
+                tvStatus?.text = "For Rent"
+            }
+            else -> {
+                tvStatus?.text = "N/A"
+            }
+        }
 
         val priceText = when {
             property.rentPrice != null -> "Rs.${property.rentPrice}/mo"

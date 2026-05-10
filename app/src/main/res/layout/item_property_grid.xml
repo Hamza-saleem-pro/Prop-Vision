@@ -72,18 +72,36 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/propertyName"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginStart="4dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Wings Tower"
-            android:textColor="#2D3A5F"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_marginStart="4dp">
+            <TextView
+                android:id="@+id/propertyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Wings Tower"
+                android:textColor="#2D3A5F"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/propertyStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/social_button_bg"
+                android:backgroundTint="#E1F5FE"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="1dp"
+                android:text="For Rent"
+                android:textColor="#03A9F4"
+                android:textSize="8sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

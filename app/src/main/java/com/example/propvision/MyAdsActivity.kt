@@ -57,6 +57,7 @@ class MyAdsActivity : AppCompatActivity() {
                     val tvName = view.findViewById<TextView>(R.id.propertyName)
                     val tvLocation = view.findViewById<TextView>(R.id.propertyLocation)
                     val tvPrice = view.findViewById<TextView>(R.id.propertyPrice)
+                    val tvStatus = view.findViewById<TextView>(R.id.propertyTypeTag)
 
                     val images = doc.get("imageUris") as? List<String>
                     if (!images.isNullOrEmpty()) {
@@ -67,6 +68,23 @@ class MyAdsActivity : AppCompatActivity() {
                     tvLocation.text = doc.getString("address") ?: ""
                     val rent = doc.getString("rentPrice")
                     val sell = doc.getString("sellPrice")
+                    
+                    // Dynamic Status Label Logic
+                    when {
+                        !rent.isNullOrEmpty() && !sell.isNullOrEmpty() -> {
+                            tvStatus.text = "For Rent & Sale"
+                        }
+                        !sell.isNullOrEmpty() -> {
+                            tvStatus.text = "For Sale"
+                        }
+                        !rent.isNullOrEmpty() -> {
+                            tvStatus.text = "For Rent"
+                        }
+                        else -> {
+                            tvStatus.text = "N/A"
+                        }
+                    }
+
                     tvPrice.text = when {
                         !rent.isNullOrEmpty() -> "Rs. $rent/month"
                         !sell.isNullOrEmpty() -> "Rs. $sell"
